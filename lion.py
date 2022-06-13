@@ -2,8 +2,8 @@ from animal import Animal
 
 class Lion(Animal):
     ''' The Lion class'''
-    def __init__(self, age, race, color, height, length_of_body, weight, length_of_life, is_wild=True, mane="niewielka") -> None:
-        super().__init__(age, race, color, height, length_of_body, weight, length_of_life, is_wild)
+    def __init__(self, race, color, height, weight, length_of_life, is_wild=True, mane="niewielka") -> None:
+        super().__init__(race, color, height, weight, length_of_life, is_wild)
         self.__mane = mane
 
     def __repr__(self):
@@ -18,4 +18,4 @@ class Lion(Animal):
     mane = property(__get_mane, __set_mane)
 
     def give_voice(self):
-        print("Yyyyy")
+        return "Yyyyy"

@@ -2,8 +2,8 @@ from animal import Animal
 
 class Horse(Animal):
     ''' The Horse class'''
-    def __init__(self, age, race, color, height, length_of_body, weight, length_of_life, is_wild, is_draught, is_sports, mane) -> None:
-        super().__init__(age, race, color, height, length_of_body, weight, length_of_life, is_wild)
+    def __init__(self, race, color, height, weight, length_of_life, is_wild, is_draught, is_sports, mane) -> None:
+        super().__init__(race, color, height, weight, length_of_life, is_wild)
         self.__is_draught = is_draught
         self.__is_sports = is_sports
         self.__mane = mane
@@ -36,4 +36,4 @@ class Horse(Animal):
     mane = property(__get_mane, __set_mane)
 
     def give_voice(self):
-        print("Ihaaa")
+        return "Ihaaa"
