@@ -1,10 +1,12 @@
-from ctypes import alignment
 import tkinter as tk
 from tkinter import SOLID, font as tkfont
 from PIL import Image, ImageTk
+from flask import Flask
 from cat import *
 from dog import *
 from cow import *
+from horse import *
+from lion import *
 import pyttsx3
 
 
@@ -25,21 +27,18 @@ cow1 = Cow('holsztyno-fryzyjska', 'biało-czarne', 1.4, 700, 6, False, True, Fal
 cow2 = Cow('jersey', 'brązowo-białe', 1.25, 420, 6, False, True, False)
 cow3 = Cow('duńska-czerwona', 'czerwone', 1.34, 640, 6, False, True, False)
 cow4 = Cow('charolaise', 'białe', 1.4, 800, 6, False, False, True)
-cow5 = Cow('limousine', 'jasno brązowe', 1.35, 730, 6, False, False, True)
+cow5 = Cow('limousine', 'jasnobrązowe', 1.35, 730, 6, False, False, True)
 
-'''
-horse1 = Horse()
-horse2 = Horse()
-horse3 = Horse()
-horse4 = Horse()
-horse5 = Horse()
+horse1 = Horse('koń huculski', 'gniade', 1.4, 400, 35, False, False, False, 'duża')
+horse2 = Horse('koń małopolski', 'siwe, gniade', 1.65, 540, 30, False, False, False, 'mała')
+horse3 = Horse('koń oldenburski', 'skarogniade', 1.7, 650, 30, False, False, True, 'mała')
+horse4 = Horse('Holenderski koń gorącokrwisty', 'kasztanowate', 1.7, 900, 20, False, False, True, 'mała')
+horse5 = Horse('Shire', 'skarogniade', 2, 1200, 25, False, True, False, 'duża')
 
-lion1 = Lion()
-lion2 = Lion()
-lion3 = Lion()
-lion4 = Lion()
-lion5 = Lion()
-'''
+lion1 = Lion('lew azjatycki', 'jasnobrązowo - ciemne', 1, 225, 10)
+lion2 = Lion('lew wschodnioafrykański', 'jasnobrązowo - ciemne', 1, 280, 10)
+lion3 = Lion('lew berberyjski', 'jasnobrązowo - ciemne', 2.8, 270, 10, True, 'duża')
+lion4 = Lion('lew angolski', 'jasnobrązowo - ciemne', 1.2, 250, 10, True, 'duża')
 
 
 class AnimalsApp(tk.Tk):
@@ -63,7 +62,9 @@ class AnimalsApp(tk.Tk):
         for F in (StartPage, PageOne, PageTwoCats, PageThreeCat1, PageThreeCat2,
          PageThreeCat3, PageThreeCat4, PageThreeCat5, PageTwoDogs, PageThreeDog1, PageThreeDog2,
          PageThreeDog3, PageThreeDog4, PageThreeDog5, PageTwoCows, PageThreeCow1, PageThreeCow2, 
-         PageThreeCow3, PageThreeCow4, PageThreeCow5):
+         PageThreeCow3, PageThreeCow4, PageThreeCow5, PageTwoHorses, PageThreeHorse1,
+         PageThreeHorse2, PageThreeHorse3, PageThreeHorse4, PageThreeHorse5, PageTwoLions,
+         PageThreeLion1, PageThreeLion2, PageThreeLion3, PageThreeLion4):
             page_name = F.__name__
             frame = F(parent=container, controller=self)
             self.frames[page_name] = frame
@@ -91,7 +92,12 @@ class AnimalsApp(tk.Tk):
         elif page_name == "PageTwoCows":
             engine.say(cow1.give_voice())
             engine.runAndWait()
-
+        elif page_name == "PageTwoHorses":
+            engine.say(horse1.give_voice())
+            engine.runAndWait()
+        elif page_name == "PageTwoLions":
+            engine.say(lion1.give_voice())
+            engine.runAndWait()
 
 
 class StartPage(tk.Frame):
@@ -197,6 +203,50 @@ class PageTwoCows(tk.Frame):
         button = tk.Button(self, text="Back", bg='purple',
                            command=lambda: controller.show_frame("PageOne"))
         button.grid(row=4, column=1, pady=20)
+
+class PageTwoHorses(tk.Frame):
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+        self.controller = controller
+        label = tk.Label(self, text="Horses", font=controller.title_font)
+        label.grid(row=0, column=0, columnspan=2, pady=10, sticky='we')
+
+        button1 = tk.Button(self, text='Koń huculski', width=25, command=lambda: controller.show_frame("PageThreeHorse1"))
+        button1.grid(row=1, column=0)
+        button2 = tk.Button(self, text='Kot małopolski', width=25, command=lambda: controller.show_frame("PageThreeHorse2"))
+        button2.grid(row=1, column=1)
+        button3 = tk.Button(self, text='Kot oldenburski', width=25, command=lambda: controller.show_frame("PageThreeHorse3"))
+        button3.grid(row=2, column=0)
+        button4 = tk.Button(self, text='Holenderski koń gorącokrwisty', width=25, command=lambda: controller.show_frame("PageThreeHorse4"))
+        button4.grid(row=2, column=1)
+        button5 = tk.Button(self, text='Shire', width=25, command=lambda: controller.show_frame("PageThreeHorse5"))
+        button5.grid(row=3, column=0)
+        
+
+        button = tk.Button(self, text="Back", bg='purple',
+                           command=lambda: controller.show_frame("PageOne"))
+        button.grid(row=4, column=1, pady=20)
+
+class PageTwoLions(tk.Frame):
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+        self.controller = controller
+        label = tk.Label(self, text="Lions", font=controller.title_font)
+        label.grid(row=0, column=0, columnspan=2, pady=10, sticky='we')
+
+        button1 = tk.Button(self, text='azjatycki', width=15, command=lambda: controller.show_frame("PageThreeLion1"))
+        button1.grid(row=1, column=0)
+        button2 = tk.Button(self, text='wschodnioafrykański', width=15, command=lambda: controller.show_frame("PageThreeLion2"))
+        button2.grid(row=1, column=1)
+        button3 = tk.Button(self, text='berberyjski', width=15, command=lambda: controller.show_frame("PageThreeLion3"))
+        button3.grid(row=2, column=0)
+        button4 = tk.Button(self, text='angolski', width=15, command=lambda: controller.show_frame("PageThreeLion4"))
+        button4.grid(row=2, column=1)
+
+        button = tk.Button(self, text="Back", bg='purple',
+                           command=lambda: controller.show_frame("PageOne"))
+        button.grid(row=3, column=1, pady=20)
+
 
 class PageThreeCat1(tk.Frame):
     def __init__(self, parent, controller):
@@ -661,6 +711,293 @@ class PageThreeCow5(tk.Frame):
         button = tk.Button(self, text="Back", bg='purple',
                            command=lambda: controller.show_frame("PageTwoCows"))
         button.grid(row=8, column=1, pady=20)
+
+
+class PageThreeHorse1(tk.Frame):
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+        self.controller = controller
+        race = tk.Label(self, text=horse1.race.capitalize(), font=controller.title_font)
+        race.grid(row=0, column=0, columnspan=2, pady=10, sticky='we')
+    
+        img = ImageTk.PhotoImage(Image.open('img/horses/huculski.jpg'))
+        label2 = tk.Label(self, image=img, relief=SOLID)
+        label2.grid(row=1, column=0, rowspan=8, sticky='w')
+        label2.image=img
+
+        color = tk.Label(self, text='Umaszczenie: ' + horse1.color)
+        color.grid(row=1, column=1, sticky='w')
+        height = tk.Label(self, text='Wysokość: ' + str(horse1.height) + "m")
+        height.grid(row=2, column=1, sticky='w')
+        weight = tk.Label(self, text= 'Waga: ' + str(horse1.weight) + "kg")
+        weight.grid(row=3, column=1, sticky='w')
+        length_of_life = tk.Label(self, text='Dlugość życia: ' + str(horse1.length_of_life))
+        length_of_life.grid(row=4, column=1, sticky='w')
+        is_wild = tk.Label(self, text='Czy dziki: ' + ("Tak" if horse1.is_wild else "Nie"))
+        is_wild.grid(row=5, column=1, sticky='w')
+        is_draught = tk.Label(self, text='Czy pociągowy: ' + ("Tak" if horse1.is_draught else "Nie"))
+        is_draught.grid(row=6, column=1, sticky='w')
+        is_sports = tk.Label(self, text='Czy sportowy: ' + ("Tak" if horse1.is_sports else "Nie"))
+        is_sports.grid(row=7, column=1, sticky='w')
+        mane = tk.Label(self, text='Wielkość grzywy: ' + str(horse1.mane))
+        mane.grid(row=8, column=1, sticky='w')
+
+        button = tk.Button(self, text="Back", bg='purple',
+                           command=lambda: controller.show_frame("PageTwoHorses"))
+        button.grid(row=9, column=1, pady=20)
+
+class PageThreeHorse2(tk.Frame):
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+        self.controller = controller
+        race = tk.Label(self, text=horse2.race.capitalize(), font=controller.title_font)
+        race.grid(row=0, column=0, columnspan=2, pady=10, sticky='we')
+    
+        img = ImageTk.PhotoImage(Image.open('img/horses/malopolski.jpg'))
+        label2 = tk.Label(self, image=img, relief=SOLID)
+        label2.grid(row=1, column=0, rowspan=8, sticky='w')
+        label2.image=img
+
+        color = tk.Label(self, text='Umaszczenie: ' + horse2.color)
+        color.grid(row=1, column=1, sticky='w')
+        height = tk.Label(self, text='Wysokość: ' + str(horse2.height) + "m")
+        height.grid(row=2, column=1, sticky='w')
+        weight = tk.Label(self, text= 'Waga: ' + str(horse2.weight) + "kg")
+        weight.grid(row=3, column=1, sticky='w')
+        length_of_life = tk.Label(self, text='Dlugość życia: ' + str(horse2.length_of_life))
+        length_of_life.grid(row=4, column=1, sticky='w')
+        is_wild = tk.Label(self, text='Czy dziki: ' + ("Tak" if horse2.is_wild else "Nie"))
+        is_wild.grid(row=5, column=1, sticky='w')
+        is_draught = tk.Label(self, text='Czy pociągowy: ' + ("Tak" if horse2.is_draught else "Nie"))
+        is_draught.grid(row=6, column=1, sticky='w')
+        is_sports = tk.Label(self, text='Czy sportowy: ' + ("Tak" if horse2.is_sports else "Nie"))
+        is_sports.grid(row=7, column=1, sticky='w')
+        mane = tk.Label(self, text='Wielkość grzywy: ' + str(horse2.mane))
+        mane.grid(row=8, column=1, sticky='w')
+
+        button = tk.Button(self, text="Back", bg='purple',
+                           command=lambda: controller.show_frame("PageTwoHorses"))
+        button.grid(row=9, column=1, pady=20)
+
+
+class PageThreeHorse3(tk.Frame):
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+        self.controller = controller
+        race = tk.Label(self, text=horse3.race.capitalize(), font=controller.title_font)
+        race.grid(row=0, column=0, columnspan=2, pady=10, sticky='we')
+    
+        img = ImageTk.PhotoImage(Image.open('img/horses/oldenburski.jpg'))
+        label2 = tk.Label(self, image=img, relief=SOLID)
+        label2.grid(row=1, column=0, rowspan=8, sticky='w')
+        label2.image=img
+
+        color = tk.Label(self, text='Umaszczenie: ' + horse3.color)
+        color.grid(row=1, column=1, sticky='w')
+        height = tk.Label(self, text='Wysokość: ' + str(horse3.height) + "m")
+        height.grid(row=2, column=1, sticky='w')
+        weight = tk.Label(self, text= 'Waga: ' + str(horse3.weight) + "kg")
+        weight.grid(row=3, column=1, sticky='w')
+        length_of_life = tk.Label(self, text='Dlugość życia: ' + str(horse3.length_of_life))
+        length_of_life.grid(row=4, column=1, sticky='w')
+        is_wild = tk.Label(self, text='Czy dziki: ' + ("Tak" if horse3.is_wild else "Nie"))
+        is_wild.grid(row=5, column=1, sticky='w')
+        is_draught = tk.Label(self, text='Czy pociągowy: ' + ("Tak" if horse3.is_draught else "Nie"))
+        is_draught.grid(row=6, column=1, sticky='w')
+        is_sports = tk.Label(self, text='Czy sportowy: ' + ("Tak" if horse3.is_sports else "Nie"))
+        is_sports.grid(row=7, column=1, sticky='w')
+        mane = tk.Label(self, text='Wielkość grzywy: ' + str(horse3.mane))
+        mane.grid(row=8, column=1, sticky='w')
+
+        button = tk.Button(self, text="Back", bg='purple',
+                           command=lambda: controller.show_frame("PageTwoHorses"))
+        button.grid(row=9, column=1, pady=20)
+
+class PageThreeHorse4(tk.Frame):
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+        self.controller = controller
+        race = tk.Label(self, text=horse4.race.capitalize(), font=controller.title_font)
+        race.grid(row=0, column=0, columnspan=2, pady=10, sticky='we')
+    
+        img = ImageTk.PhotoImage(Image.open('img/horses/Holenderski koń gorącokrwisty.jpg'))
+        label2 = tk.Label(self, image=img, relief=SOLID)
+        label2.grid(row=1, column=0, rowspan=8, sticky='w')
+        label2.image=img
+
+        color = tk.Label(self, text='Umaszczenie: ' + horse4.color)
+        color.grid(row=1, column=1, sticky='w')
+        height = tk.Label(self, text='Wysokość: ' + str(horse4.height) + "m")
+        height.grid(row=2, column=1, sticky='w')
+        weight = tk.Label(self, text= 'Waga: ' + str(horse4.weight) + "kg")
+        weight.grid(row=3, column=1, sticky='w')
+        length_of_life = tk.Label(self, text='Dlugość życia: ' + str(horse4.length_of_life))
+        length_of_life.grid(row=4, column=1, sticky='w')
+        is_wild = tk.Label(self, text='Czy dziki: ' + ("Tak" if horse4.is_wild else "Nie"))
+        is_wild.grid(row=5, column=1, sticky='w')
+        is_draught = tk.Label(self, text='Czy pociągowy: ' + ("Tak" if horse4.is_draught else "Nie"))
+        is_draught.grid(row=6, column=1, sticky='w')
+        is_sports = tk.Label(self, text='Czy sportowy: ' + ("Tak" if horse4.is_sports else "Nie"))
+        is_sports.grid(row=7, column=1, sticky='w')
+        mane = tk.Label(self, text='Wielkość grzywy: ' + str(horse4.mane))
+        mane.grid(row=8, column=1, sticky='w')
+
+        button = tk.Button(self, text="Back", bg='purple',
+                           command=lambda: controller.show_frame("PageTwoHorses"))
+        button.grid(row=9, column=1, pady=20)
+
+class PageThreeHorse5(tk.Frame):
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+        self.controller = controller
+        race = tk.Label(self, text=horse5.race.capitalize(), font=controller.title_font)
+        race.grid(row=0, column=0, columnspan=2, pady=10, sticky='we')
+    
+        img = ImageTk.PhotoImage(Image.open('img/horses/shire.JPG'))
+        label2 = tk.Label(self, image=img, relief=SOLID)
+        label2.grid(row=1, column=0, rowspan=8, sticky='w')
+        label2.image=img
+
+        color = tk.Label(self, text='Umaszczenie: ' + horse5.color)
+        color.grid(row=1, column=1, sticky='w')
+        height = tk.Label(self, text='Wysokość: ' + str(horse5.height) + "m")
+        height.grid(row=2, column=1, sticky='w')
+        weight = tk.Label(self, text= 'Waga: ' + str(horse5.weight) + "kg")
+        weight.grid(row=3, column=1, sticky='w')
+        length_of_life = tk.Label(self, text='Dlugość życia: ' + str(horse5.length_of_life))
+        length_of_life.grid(row=4, column=1, sticky='w')
+        is_wild = tk.Label(self, text='Czy dziki: ' + ("Tak" if horse5.is_wild else "Nie"))
+        is_wild.grid(row=5, column=1, sticky='w')
+        is_draught = tk.Label(self, text='Czy pociągowy: ' + ("Tak" if horse5.is_draught else "Nie"))
+        is_draught.grid(row=6, column=1, sticky='w')
+        is_sports = tk.Label(self, text='Czy sportowy: ' + ("Tak" if horse5.is_sports else "Nie"))
+        is_sports.grid(row=7, column=1, sticky='w')
+        mane = tk.Label(self, text='Wielkość grzywy: ' + str(horse5.mane))
+        mane.grid(row=8, column=1, sticky='w')
+
+        button = tk.Button(self, text="Back", bg='purple',
+                           command=lambda: controller.show_frame("PageTwoHorses"))
+        button.grid(row=9, column=1, pady=20)
+
+
+class PageThreeLion1(tk.Frame):
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+        self.controller = controller
+        race = tk.Label(self, text=lion1.race.capitalize(), font=controller.title_font)
+        race.grid(row=0, column=0, columnspan=2, pady=10, sticky='we')
+    
+        img = ImageTk.PhotoImage(Image.open('img/lions/azjatycki.jpg'))
+        label2 = tk.Label(self, image=img, relief=SOLID)
+        label2.grid(row=1, column=0, rowspan=8, sticky='w')
+        label2.image=img
+
+        color = tk.Label(self, text='Umaszczenie: ' + lion1.color)
+        color.grid(row=1, column=1, sticky='w')
+        height = tk.Label(self, text='Wysokość: ' + str(lion1.height) + "m")
+        height.grid(row=2, column=1, sticky='w')
+        weight = tk.Label(self, text= 'Waga: ' + str(lion1.weight) + "kg")
+        weight.grid(row=3, column=1, sticky='w')
+        length_of_life = tk.Label(self, text='Dlugość życia: ' + str(lion1.length_of_life))
+        length_of_life.grid(row=4, column=1, sticky='w')
+        is_wild = tk.Label(self, text='Czy dziki: ' + ("Tak" if lion1.is_wild else "Nie"))
+        is_wild.grid(row=5, column=1, sticky='w')
+        mane = tk.Label(self, text='Wielkość grzywy: ' + str(lion1.mane))
+        mane.grid(row=6, column=1, sticky='w')
+
+        button = tk.Button(self, text="Back", bg='purple',
+                           command=lambda: controller.show_frame("PageTwoLions"))
+        button.grid(row=7, column=1, pady=20)
+
+
+class PageThreeLion2(tk.Frame):
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+        self.controller = controller
+        race = tk.Label(self, text=lion2.race.capitalize(), font=controller.title_font)
+        race.grid(row=0, column=0, columnspan=2, pady=10, sticky='we')
+    
+        img = ImageTk.PhotoImage(Image.open('img/lions/wschodnioafrykański.jpg'))
+        label2 = tk.Label(self, image=img, relief=SOLID)
+        label2.grid(row=1, column=0, rowspan=8, sticky='w')
+        label2.image=img
+
+        color = tk.Label(self, text='Umaszczenie: ' + lion2.color)
+        color.grid(row=1, column=1, sticky='w')
+        height = tk.Label(self, text='Wysokość: ' + str(lion2.height) + "m")
+        height.grid(row=2, column=1, sticky='w')
+        weight = tk.Label(self, text= 'Waga: ' + str(lion2.weight) + "kg")
+        weight.grid(row=3, column=1, sticky='w')
+        length_of_life = tk.Label(self, text='Dlugość życia: ' + str(lion2.length_of_life))
+        length_of_life.grid(row=4, column=1, sticky='w')
+        is_wild = tk.Label(self, text='Czy dziki: ' + ("Tak" if lion2.is_wild else "Nie"))
+        is_wild.grid(row=5, column=1, sticky='w')
+        mane = tk.Label(self, text='Wielkość grzywy: ' + str(lion2.mane))
+        mane.grid(row=6, column=1, sticky='w')
+
+        button = tk.Button(self, text="Back", bg='purple',
+                           command=lambda: controller.show_frame("PageTwoLions"))
+        button.grid(row=7, column=1, pady=20)
+
+
+class PageThreeLion3(tk.Frame):
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+        self.controller = controller
+        race = tk.Label(self, text=lion3.race.capitalize(), font=controller.title_font)
+        race.grid(row=0, column=0, columnspan=2, pady=10, sticky='we')
+    
+        img = ImageTk.PhotoImage(Image.open('img/lions/berberyjski.jpg'))
+        label2 = tk.Label(self, image=img, relief=SOLID)
+        label2.grid(row=1, column=0, rowspan=8, sticky='w')
+        label2.image=img
+
+        color = tk.Label(self, text='Umaszczenie: ' + lion3.color)
+        color.grid(row=1, column=1, sticky='w')
+        height = tk.Label(self, text='Wysokość: ' + str(lion3.height) + "m")
+        height.grid(row=2, column=1, sticky='w')
+        weight = tk.Label(self, text= 'Waga: ' + str(lion3.weight) + "kg")
+        weight.grid(row=3, column=1, sticky='w')
+        length_of_life = tk.Label(self, text='Dlugość życia: ' + str(lion3.length_of_life))
+        length_of_life.grid(row=4, column=1, sticky='w')
+        is_wild = tk.Label(self, text='Czy dziki: ' + ("Tak" if lion3.is_wild else "Nie"))
+        is_wild.grid(row=5, column=1, sticky='w')
+        mane = tk.Label(self, text='Wielkość grzywy: ' + str(lion3.mane))
+        mane.grid(row=6, column=1, sticky='w')
+
+        button = tk.Button(self, text="Back", bg='purple',
+                           command=lambda: controller.show_frame("PageTwoLions"))
+        button.grid(row=7, column=1, pady=20)
+
+
+class PageThreeLion4(tk.Frame):
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+        self.controller = controller
+        race = tk.Label(self, text=lion4.race.capitalize(), font=controller.title_font)
+        race.grid(row=0, column=0, columnspan=2, pady=10, sticky='we')
+    
+        img = ImageTk.PhotoImage(Image.open('img/lions/angolski.jpg'))
+        label2 = tk.Label(self, image=img, relief=SOLID)
+        label2.grid(row=1, column=0, rowspan=8, sticky='w')
+        label2.image=img
+
+        color = tk.Label(self, text='Umaszczenie: ' + lion4.color)
+        color.grid(row=1, column=1, sticky='w')
+        height = tk.Label(self, text='Wysokość: ' + str(lion4.height) + "m")
+        height.grid(row=2, column=1, sticky='w')
+        weight = tk.Label(self, text= 'Waga: ' + str(lion4.weight) + "kg")
+        weight.grid(row=3, column=1, sticky='w')
+        length_of_life = tk.Label(self, text='Dlugość życia: ' + str(lion4.length_of_life))
+        length_of_life.grid(row=4, column=1, sticky='w')
+        is_wild = tk.Label(self, text='Czy dziki: ' + ("Tak" if lion4.is_wild else "Nie"))
+        is_wild.grid(row=5, column=1, sticky='w')
+        mane = tk.Label(self, text='Wielkość grzywy: ' + str(lion4.mane))
+        mane.grid(row=6, column=1, sticky='w')
+
+        button = tk.Button(self, text="Back", bg='purple',
+                           command=lambda: controller.show_frame("PageTwoLions"))
+        button.grid(row=7, column=1, pady=20)
 
 
 if __name__ == "__main__":

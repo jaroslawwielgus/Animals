@@ -18,4 +18,4 @@ class Lion(Animal):
     mane = property(__get_mane, __set_mane)
 
     def give_voice(self):
-        return "Yyyyy"
+        return "Yyy"
