@@ -64,16 +64,3 @@ class Animal(ABC):
     @abstractmethod
     def give_voice(self):
         pass
-
-
-
-'''
-age - w ktorym osiaga wymiary - jest dorosle
-rasa - race
-kolor - umaszczenie -color
-height
-length_of_body
-weight
-length_of_life
-isWild = False
-'''
