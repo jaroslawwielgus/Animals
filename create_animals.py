@@ -1,5 +1,8 @@
 from schema import Cat, Dog, Cow, Horse, Lion, Session, engine
 
+'''
+Creating animals
+'''
 cats=[
     {
         "race":"kot sfinks",
@@ -248,6 +251,9 @@ lions=[
 
 local_session = Session(bind=engine)
 
+'''
+Adding animals to database
+'''
 '''for c in cats:
     new_cat = Cat(race=c["race"], color=c["color"], height=c["height"], weight=c["weight"], 
         length_of_life=c["length_of_life"], isWild=c["isWild"], isCatchingMouses=c["isCatchingMouses"])
@@ -264,7 +270,8 @@ local_session = Session(bind=engine)
 
 '''for c in cows:
     new_cow = Cow(race=c["race"], color=c["color"], height=c["height"], weight=c["weight"], 
-        length_of_life=c["length_of_life"], isWild=c["isWild"], isGivingMilk=c["isGivingMilk"], isForMeat=c["isForMeat"])
+        length_of_life=c["length_of_life"], isWild=c["isWild"], isGivingMilk=c["isGivingMilk"], 
+        isForMeat=c["isForMeat"])
     local_session.add(new_cow)
     local_session.commit()
     print(f"Added {c}")'''

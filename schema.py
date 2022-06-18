@@ -22,12 +22,10 @@ class Cat(Base):
     isCatchingMouses = Column(Boolean(), nullable=False)
 
     def __repr__(self):
-        return f"Race: {self.race} Color: {self.color}"
+        return f"Race: {self.race}"
 
-'''
-cat1 = Cat(race='kot sfinks', color='zróżnicowane', height=0.28, weight=4.5, length_of_life=13.5, isWild=False, isCatchingMouses=False)
-print(cat1)
-'''
+#cat1 = Cat(race='kot sfinks', color='zróżnicowane', height=0.28, weight=4.5, length_of_life=13.5, isWild=False, isCatchingMouses=False)
+#print(cat1)
 
 class Dog(Base):
     __tablename__ = 'dogs'
