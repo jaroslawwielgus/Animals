@@ -114,15 +114,15 @@ class PageOne(tk.Frame):
         label = tk.Label(self, text="Gatunki", font=controller.title_font)
         label.grid(row=0, column=0, columnspan=2, pady=10)
     
-        button1 = tk.Button(self, text='Kot', width=10, command=lambda: controller.show_frame("PageTwoCats"))
+        button1 = tk.Button(self, text='Kot', width=25, command=lambda: controller.show_frame("PageTwoCats"))
         button1.grid(row=1, column=0)
-        button2 = tk.Button(self, text='Pies', width=10, command=lambda: controller.show_frame("PageTwoDogs"))
+        button2 = tk.Button(self, text='Pies', width=25, command=lambda: controller.show_frame("PageTwoDogs"))
         button2.grid(row=1, column=1)
-        button3 = tk.Button(self, text='Koń', width=10, command=lambda: controller.show_frame("PageTwoHorses"))
+        button3 = tk.Button(self, text='Koń', width=25, command=lambda: controller.show_frame("PageTwoHorses"))
         button3.grid(row=2, column=0)
-        button4 = tk.Button(self, text='Krowa', width=10, command=lambda: controller.show_frame("PageTwoCows"))
+        button4 = tk.Button(self, text='Krowa', width=25, command=lambda: controller.show_frame("PageTwoCows"))
         button4.grid(row=2, column=1)
-        button5 = tk.Button(self, text='Lew', width=10, command=lambda: controller.show_frame("PageTwoLions"))
+        button5 = tk.Button(self, text='Lew', width=25, command=lambda: controller.show_frame("PageTwoLions"))
         button5.grid(row=3, column=0)
 
         button = tk.Button(self, text="Wróć", bg='purple',
@@ -137,17 +137,18 @@ class PageTwoCats(tk.Frame):
         label = tk.Label(self, text="Koty", font=controller.title_font)
         label.grid(row=0, column=0, columnspan=2, pady=10, sticky='we')
 
-        button1 = tk.Button(self, text='Kot sfinks', width=15, command=lambda: controller.show_frame("PageThreeCat1"))
+        button1 = tk.Button(self, text='Kot sfinks', width=25, command=lambda: controller.show_frame("PageThreeCat1"))
         button1.grid(row=1, column=0)
-        button2 = tk.Button(self, text='Kot bengalski', width=15, command=lambda: controller.show_frame("PageThreeCat2"))
+        button2 = tk.Button(self, text='Kot bengalski', width=25, command=lambda: controller.show_frame("PageThreeCat2"))
         button2.grid(row=1, column=1)
-        button3 = tk.Button(self, text='Kot perski', width=15, command=lambda: controller.show_frame("PageThreeCat3"))
+        button3 = tk.Button(self, text='Kot perski', width=25, command=lambda: controller.show_frame("PageThreeCat3"))
         button3.grid(row=2, column=0)
-        button4 = tk.Button(self, text='Kot brytyjski', width=15, command=lambda: controller.show_frame("PageThreeCat4"))
+        button4 = tk.Button(self, text='Kot brytyjski', width=25, command=lambda: controller.show_frame("PageThreeCat4"))
         button4.grid(row=2, column=1)
-        button5 = tk.Button(self, text='Ryś', width=15, command=lambda: controller.show_frame("PageThreeCat5"))
+        button5 = tk.Button(self, text='Ryś', width=25, command=lambda: controller.show_frame("PageThreeCat5"))
         button5.grid(row=3, column=0)
-        button6 = tk.Button(self, text='Cat\'s trivia', width=15, bg='green', command=lambda: controller.show_frame("PageThreeCatW"))
+
+        button6 = tk.Button(self, text='Cat\'s trivia', width=25, bg='green', command=lambda: controller.show_frame("PageThreeCatW"))
         button6.grid(row=4, column=1)
         
         button = tk.Button(self, text="Wróć", bg='purple',
@@ -162,18 +163,18 @@ class PageTwoDogs(tk.Frame):
         label = tk.Label(self, text="Psy", font=controller.title_font)
         label.grid(row=0, column=0, columnspan=2, pady=10, sticky='we')
 
-        button1 = tk.Button(self, text='Beagle', width=15, command=lambda: controller.show_frame("PageThreeDog1"))
+        button1 = tk.Button(self, text='Beagle', width=25, command=lambda: controller.show_frame("PageThreeDog1"))
         button1.grid(row=1, column=0)
-        button2 = tk.Button(self, text='Border collie', width=15, command=lambda: controller.show_frame("PageThreeDog2"))
+        button2 = tk.Button(self, text='Border collie', width=25, command=lambda: controller.show_frame("PageThreeDog2"))
         button2.grid(row=1, column=1)
-        button3 = tk.Button(self, text='Golden retriever', width=15, command=lambda: controller.show_frame("PageThreeDog3"))
+        button3 = tk.Button(self, text='Golden retriever', width=25, command=lambda: controller.show_frame("PageThreeDog3"))
         button3.grid(row=2, column=0)
-        button4 = tk.Button(self, text='Owczarek niemiecki', width=15, command=lambda: controller.show_frame("PageThreeDog4"))
+        button4 = tk.Button(self, text='Owczarek niemiecki', width=25, command=lambda: controller.show_frame("PageThreeDog4"))
         button4.grid(row=2, column=1)
-        button5 = tk.Button(self, text='Yorkshire terier', width=15, command=lambda: controller.show_frame("PageThreeDog5"))
+        button5 = tk.Button(self, text='Yorkshire terier', width=25, command=lambda: controller.show_frame("PageThreeDog5"))
         button5.grid(row=3, column=0)
 
-        button6 = tk.Button(self, text='Dog of the while', width=15, bg='green', command=lambda: controller.show_frame("PageThreeDogW"))
+        button6 = tk.Button(self, text='Dog of the while', width=25, bg='green', command=lambda: controller.show_frame("PageThreeDogW"))
         button6.grid(row=4, column=1)
 
         button = tk.Button(self, text="Wróć", bg='purple',
@@ -187,15 +188,15 @@ class PageTwoCows(tk.Frame):
         label = tk.Label(self, text="Krowy", font=controller.title_font)
         label.grid(row=0, column=0, columnspan=2, pady=10, sticky='we')
 
-        button1 = tk.Button(self, text='Holsztynowo-fryzyjska', width=20, command=lambda: controller.show_frame("PageThreeCow1"))
+        button1 = tk.Button(self, text='Holsztynowo-fryzyjska', width=25, command=lambda: controller.show_frame("PageThreeCow1"))
         button1.grid(row=1, column=0)
-        button2 = tk.Button(self, text='Jersey', width=20, command=lambda: controller.show_frame("PageThreeCow2"))
+        button2 = tk.Button(self, text='Jersey', width=25, command=lambda: controller.show_frame("PageThreeCow2"))
         button2.grid(row=1, column=1)
-        button3 = tk.Button(self, text='Duńska-czerwona', width=20, command=lambda: controller.show_frame("PageThreeCow3"))
+        button3 = tk.Button(self, text='Duńska-czerwona', width=25, command=lambda: controller.show_frame("PageThreeCow3"))
         button3.grid(row=2, column=0)
-        button4 = tk.Button(self, text='Charolaise', width=20, command=lambda: controller.show_frame("PageThreeCow4"))
+        button4 = tk.Button(self, text='Charolaise', width=25, command=lambda: controller.show_frame("PageThreeCow4"))
         button4.grid(row=2, column=1)
-        button5 = tk.Button(self, text='Limousine', width=20, command=lambda: controller.show_frame("PageThreeCow5"))
+        button5 = tk.Button(self, text='Limousine', width=25, command=lambda: controller.show_frame("PageThreeCow5"))
         button5.grid(row=3, column=0)
 
         button = tk.Button(self, text="Wróć", bg='purple',
@@ -232,13 +233,13 @@ class PageTwoLions(tk.Frame):
         label = tk.Label(self, text="Lwy", font=controller.title_font)
         label.grid(row=0, column=0, columnspan=2, pady=10, sticky='we')
 
-        button1 = tk.Button(self, text='azjatycki', width=15, command=lambda: controller.show_frame("PageThreeLion1"))
+        button1 = tk.Button(self, text='azjatycki', width=25, command=lambda: controller.show_frame("PageThreeLion1"))
         button1.grid(row=1, column=0)
-        button2 = tk.Button(self, text='wschodnioafrykański', width=15, command=lambda: controller.show_frame("PageThreeLion2"))
+        button2 = tk.Button(self, text='wschodnioafrykański', width=25, command=lambda: controller.show_frame("PageThreeLion2"))
         button2.grid(row=1, column=1)
-        button3 = tk.Button(self, text='berberyjski', width=15, command=lambda: controller.show_frame("PageThreeLion3"))
+        button3 = tk.Button(self, text='berberyjski', width=25, command=lambda: controller.show_frame("PageThreeLion3"))
         button3.grid(row=2, column=0)
-        button4 = tk.Button(self, text='angolski', width=15, command=lambda: controller.show_frame("PageThreeLion4"))
+        button4 = tk.Button(self, text='angolski', width=25, command=lambda: controller.show_frame("PageThreeLion4"))
         button4.grid(row=2, column=1)
 
         button = tk.Button(self, text="Wróć", bg='purple',
