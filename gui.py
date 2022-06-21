@@ -1,11 +1,7 @@
 from io import BytesIO
-from random import randint
 import tkinter as tk
 from tkinter import SOLID, font as tkfont
-from urllib import response
 from PIL import Image, ImageTk
-from flask import Flask
-from numpy import expand_dims
 import requests
 import cat as c
 import dog as d
@@ -16,70 +12,10 @@ import pyttsx3
 from schema import Cat, Dog, Cow, Horse, Lion, Session, engine
 
 
-'''Creating animal instances'''
-'''cat1 = Cat('kot sfinks', 'zróżnicowane', 0.28, 4.5, 13.5, False, False)
-cat2 = Cat('kot bengalski', 'zróżnicowane', 0.4, 7, 12, False, False)
-cat3 = Cat('kot perski', 'białe, rude, mieszane', 0.32, 4.5, 14, False, True)
-cat4 = Cat('kot brytyjski', 'szare, cynamonowe, mieszane', 0.33, 6, 12, False, False)
-cat5 = Cat('ryś', "szare, rdzawe bądź żółtawe z czarnymi plamami", 0.9, 24, 14, True, True)
-
-dog1 = Dog('beagle', 'biało-brązowo-czarne', 0.37, 13, 14, False, True)
-dog2 = Dog('border collie', 'biało-czarne', 0.52, 17, 14, False, False)
-dog3 = Dog('golden retriever', 'biało-beżowe lub ciemno-złote', 0.58, 32, 11, False, True)
-dog4 = Dog('owczarek niemiecki', 'rudo-czarne', 0.63, 35, 11, False, True)
-dog5 = Dog('yorkshire terier', 'zróżnicowane', 0.19, 3, 15, False, True)
-
-cow1 = Cow('holsztyno-fryzyjska', 'biało-czarne', 1.4, 700, 6, False, True, False)
-cow2 = Cow('jersey', 'brązowo-białe', 1.25, 420, 6, False, True, False)
-cow3 = Cow('duńska-czerwona', 'czerwone', 1.34, 640, 6, False, True, False)
-cow4 = Cow('charolaise', 'białe', 1.4, 800, 6, False, False, True)
-cow5 = Cow('limousine', 'jasnobrązowe', 1.35, 730, 6, False, False, True)
-
-horse1 = Horse('koń huculski', 'gniade', 1.4, 400, 35, False, False, False, 'duża')
-horse2 = Horse('koń małopolski', 'siwe, gniade', 1.65, 540, 30, False, False, False, 'mała')
-horse3 = Horse('koń oldenburski', 'skarogniade', 1.7, 650, 30, False, False, True, 'mała')
-horse4 = Horse('Holenderski koń gorącokrwisty', 'kasztanowate', 1.7, 900, 20, False, False, True, 'mała')
-horse5 = Horse('Shire', 'skarogniade', 2, 1200, 25, False, True, False, 'duża')
-
-lion1 = Lion('lew azjatycki', 'jasnobrązowo - ciemne', 1, 225, 10)
-lion2 = Lion('lew wschodnioafrykański', 'jasnobrązowo - ciemne', 1, 280, 10)
-lion3 = Lion('lew berberyjski', 'jasnobrązowo - ciemne', 2.8, 270, 10, True, 'duża')
-lion4 = Lion('lew angolski', 'jasnobrązowo - ciemne', 1.2, 250, 10, True, 'duża')'''
-
+'''
+Create session to read animals' data from database
+'''
 local_session = Session(bind=engine)
-
-'''
-Read animals' data from database
-'''
-cat1 = local_session.query(Cat).filter(Cat.race=="kot sfinks").first()
-cat2 = local_session.query(Cat).filter(Cat.race=="kot bengalski").first()
-cat3 = local_session.query(Cat).filter(Cat.race=="kot perski").first()
-cat4 = local_session.query(Cat).filter(Cat.race=="kot brytyjski").first()
-cat5 = local_session.query(Cat).filter(Cat.race=="ryś").first()
-
-dog1 = local_session.query(Dog).filter(Dog.race=="beagle").first()
-dog2 = local_session.query(Dog).filter(Dog.race=="border collie").first()
-dog3 = local_session.query(Dog).filter(Dog.race=="golden retriever").first()
-dog4 = local_session.query(Dog).filter(Dog.race=="owczarek niemiecki").first()
-dog5 = local_session.query(Dog).filter(Dog.race=="yorkshire terier").first()
-
-cow1 = local_session.query(Cow).filter(Cow.race=="holsztyno-fryzyjska").first()
-cow2 = local_session.query(Cow).filter(Cow.race=="jersey").first()
-cow3 = local_session.query(Cow).filter(Cow.race=="duńska-czerwona").first()
-cow4 = local_session.query(Cow).filter(Cow.race=="charolaise").first()
-cow5 = local_session.query(Cow).filter(Cow.race=="limousine").first()
-
-horse1 = local_session.query(Horse).filter(Horse.race=="koń huculski").first()
-horse2 = local_session.query(Horse).filter(Horse.race=="koń małopolski").first()
-horse3 = local_session.query(Horse).filter(Horse.race=="koń oldenburski").first()
-horse4 = local_session.query(Horse).filter(Horse.race=="Holenderski koń gorącokrwisty").first()
-horse5 = local_session.query(Horse).filter(Horse.race=="Shire").first()
-
-lion1 = local_session.query(Lion).filter(Lion.race=="lew azjatycki").first()
-lion2 = local_session.query(Lion).filter(Lion.race=="lew wschodnioafrykański").first()
-lion3 = local_session.query(Lion).filter(Lion.race=="lew berberyjski").first()
-lion4 = local_session.query(Lion).filter(Lion.race=="lew angolski").first()
-
 
 class AnimalsApp(tk.Tk):
 
@@ -129,24 +65,29 @@ class AnimalsApp(tk.Tk):
         '''Polymorphism in action - different voices for different species'''
         engine = pyttsx3.init()
         if page_name == "PageTwoCats":
+            cat1 = local_session.query(Cat).first()
             c1 = c.Cat(cat1.race, cat1.color, cat1.height, cat1.weight, cat1.length_of_life, cat1.isWild, cat1.isCatchingMouses) 
             engine.say(c1.give_voice())
             engine.runAndWait()
         elif page_name == "PageTwoDogs":
+            dog1 = local_session.query(Dog).first()
             d1 = d.Dog(dog1.race, dog1.color, dog1.height, dog1.weight, dog1.length_of_life, dog1.isWild, dog1.isRetrieving)
             engine.say(d1.give_voice())
             engine.runAndWait()
         elif page_name == "PageTwoCows":
+            cow1 = local_session.query(Cow).first()
             co1 = co.Cow(cow1.race, cow1.color, cow1.height, cow1.weight, cow1.length_of_life, cow1.isWild, cow1.isGivingMilk, 
                 cow1.isForMeat)
             engine.say(co1.give_voice())
             engine.runAndWait()
         elif page_name == "PageTwoHorses":
+            horse1 = local_session.query(Horse).first()
             h1 = h.Horse(horse1.race, horse1.color, horse1.height, horse1.weight, horse1.length_of_life, horse1.isWild, 
                 horse1.isDraught, horse1.isSports, horse1.mane)
             engine.say(h1.give_voice())
             engine.runAndWait()
         elif page_name == "PageTwoLions":
+            lion1 = local_session.query(Lion).first()
             l1 = l.Lion(lion1.race, lion1.color, lion1.height, lion1.weight, lion1.length_of_life, lion1.isWild, lion1.mane)
             engine.say(l1.give_voice())
             engine.runAndWait()
@@ -309,6 +250,7 @@ class PageThreeCat1(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.controller = controller
+        cat1 = local_session.query(Cat).filter(Cat.race=="kot sfinks").first()
         race = tk.Label(self, text=cat1.race.capitalize(), font=controller.title_font)
         race.grid(row=0, column=0, columnspan=2, pady=10, sticky='we')
         
@@ -350,6 +292,7 @@ class PageThreeCat2(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.controller = controller
+        cat2 = local_session.query(Cat).filter(Cat.race=="kot bengalski").first()
         race = tk.Label(self, text=cat2.race.capitalize(), font=controller.title_font)
         race.grid(row=0, column=0, columnspan=2, pady=10, sticky='we')
     
@@ -380,6 +323,7 @@ class PageThreeCat3(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.controller = controller
+        cat3 = local_session.query(Cat).filter(Cat.race=="kot perski").first()
         race = tk.Label(self, text=cat3.race.capitalize(), font=controller.title_font)
         race.grid(row=0, column=0, columnspan=2, pady=10, sticky='we')
     
@@ -409,6 +353,7 @@ class PageThreeCat4(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.controller = controller
+        cat4 = local_session.query(Cat).filter(Cat.race=="kot brytyjski").first()
         race = tk.Label(self, text=cat4.race.capitalize(), font=controller.title_font)
         race.grid(row=0, column=0, columnspan=2, pady=10, sticky='we')
     
@@ -439,6 +384,7 @@ class PageThreeCat5(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.controller = controller
+        cat5 = local_session.query(Cat).filter(Cat.race=="ryś").first()
         race = tk.Label(self, text=cat5.race.capitalize(), font=controller.title_font)
         race.grid(row=0, column=0, columnspan=2, pady=10, sticky='we')
     
@@ -488,6 +434,7 @@ class PageThreeDog1(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.controller = controller
+        dog1 = local_session.query(Dog).filter(Dog.race=="beagle").first()
         race = tk.Label(self, text=dog1.race.capitalize(), font=controller.title_font)
         race.grid(row=0, column=0, columnspan=2, pady=10, sticky='we')
         
@@ -517,6 +464,7 @@ class PageThreeDog2(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.controller = controller
+        dog2 = local_session.query(Dog).filter(Dog.race=="border collie").first()
         race = tk.Label(self, text=dog2.race.capitalize(), font=controller.title_font)
         race.grid(row=0, column=0, columnspan=2, pady=10, sticky='we')
         
@@ -546,6 +494,7 @@ class PageThreeDog3(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.controller = controller
+        dog3 = local_session.query(Dog).filter(Dog.race=="golden retriever").first()
         race = tk.Label(self, text=dog3.race.capitalize(), font=controller.title_font)
         race.grid(row=0, column=0, columnspan=2, pady=10, sticky='we')
         
@@ -575,6 +524,7 @@ class PageThreeDog4(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.controller = controller
+        dog4 = local_session.query(Dog).filter(Dog.race=="owczarek niemiecki").first()
         race = tk.Label(self, text=dog4.race.capitalize(), font=controller.title_font)
         race.grid(row=0, column=0, columnspan=2, pady=10, sticky='we')
         
@@ -604,6 +554,7 @@ class PageThreeDog5(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.controller = controller
+        dog5 = local_session.query(Dog).filter(Dog.race=="yorkshire terier").first()
         race = tk.Label(self, text=dog5.race.capitalize(), font=controller.title_font)
         race.grid(row=0, column=0, columnspan=2, pady=10, sticky='we')
         
@@ -662,6 +613,7 @@ class PageThreeCow1(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.controller = controller
+        cow1 = local_session.query(Cow).filter(Cow.race=="holsztyno-fryzyjska").first()
         race = tk.Label(self, text=cow1.race.capitalize(), font=controller.title_font)
         race.grid(row=0, column=0, columnspan=2, pady=10, sticky='we')
     
@@ -693,6 +645,7 @@ class PageThreeCow2(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.controller = controller
+        cow2 = local_session.query(Cow).filter(Cow.race=="jersey").first()
         race = tk.Label(self, text=cow2.race.capitalize(), font=controller.title_font)
         race.grid(row=0, column=0, columnspan=2, pady=10, sticky='we')
     
@@ -724,6 +677,7 @@ class PageThreeCow3(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.controller = controller
+        cow3 = local_session.query(Cow).filter(Cow.race=="duńska-czerwona").first()
         race = tk.Label(self, text=cow3.race.capitalize(), font=controller.title_font)
         race.grid(row=0, column=0, columnspan=2, pady=10, sticky='we')
     
@@ -756,6 +710,7 @@ class PageThreeCow4(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.controller = controller
+        cow4 = local_session.query(Cow).filter(Cow.race=="charolaise").first()
         race = tk.Label(self, text=cow4.race.capitalize(), font=controller.title_font)
         race.grid(row=0, column=0, columnspan=2, pady=10, sticky='we')
     
@@ -787,7 +742,8 @@ class PageThreeCow4(tk.Frame):
 class PageThreeCow5(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
-        self.controller = controller
+        self.controller = controller 
+        cow5 = local_session.query(Cow).filter(Cow.race=="limousine").first()
         race = tk.Label(self, text=cow5.race.capitalize(), font=controller.title_font)
         race.grid(row=0, column=0, columnspan=2, pady=10, sticky='we')
     
@@ -821,6 +777,7 @@ class PageThreeHorse1(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.controller = controller
+        horse1 = local_session.query(Horse).filter(Horse.race=="koń huculski").first()
         race = tk.Label(self, text=horse1.race.capitalize(), font=controller.title_font)
         race.grid(row=0, column=0, columnspan=2, pady=10, sticky='we')
     
@@ -854,6 +811,7 @@ class PageThreeHorse2(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.controller = controller
+        horse2 = local_session.query(Horse).filter(Horse.race=="koń małopolski").first()
         race = tk.Label(self, text=horse2.race.capitalize(), font=controller.title_font)
         race.grid(row=0, column=0, columnspan=2, pady=10, sticky='we')
     
@@ -888,6 +846,7 @@ class PageThreeHorse3(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.controller = controller
+        horse3 = local_session.query(Horse).filter(Horse.race=="koń oldenburski").first()
         race = tk.Label(self, text=horse3.race.capitalize(), font=controller.title_font)
         race.grid(row=0, column=0, columnspan=2, pady=10, sticky='we')
     
@@ -921,6 +880,7 @@ class PageThreeHorse4(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.controller = controller
+        horse4 = local_session.query(Horse).filter(Horse.race=="Holenderski koń gorącokrwisty").first()
         race = tk.Label(self, text=horse4.race.capitalize(), font=controller.title_font)
         race.grid(row=0, column=0, columnspan=2, pady=10, sticky='we')
     
@@ -954,6 +914,7 @@ class PageThreeHorse5(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.controller = controller
+        horse5 = local_session.query(Horse).filter(Horse.race=="Shire").first()
         race = tk.Label(self, text=horse5.race.capitalize(), font=controller.title_font)
         race.grid(row=0, column=0, columnspan=2, pady=10, sticky='we')
     
@@ -988,6 +949,7 @@ class PageThreeLion1(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.controller = controller
+        lion1 = local_session.query(Lion).filter(Lion.race=="lew azjatycki").first()
         race = tk.Label(self, text=lion1.race.capitalize(), font=controller.title_font)
         race.grid(row=0, column=0, columnspan=2, pady=10, sticky='we')
     
@@ -1018,6 +980,7 @@ class PageThreeLion2(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.controller = controller
+        lion2 = local_session.query(Lion).filter(Lion.race=="lew wschodnioafrykański").first()
         race = tk.Label(self, text=lion2.race.capitalize(), font=controller.title_font)
         race.grid(row=0, column=0, columnspan=2, pady=10, sticky='we')
     
@@ -1048,6 +1011,7 @@ class PageThreeLion3(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.controller = controller
+        lion3 = local_session.query(Lion).filter(Lion.race=="lew berberyjski").first()
         race = tk.Label(self, text=lion3.race.capitalize(), font=controller.title_font)
         race.grid(row=0, column=0, columnspan=2, pady=10, sticky='we')
     
@@ -1078,6 +1042,7 @@ class PageThreeLion4(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.controller = controller
+        lion4 = local_session.query(Lion).filter(Lion.race=="lew angolski").first()
         race = tk.Label(self, text=lion4.race.capitalize(), font=controller.title_font)
         race.grid(row=0, column=0, columnspan=2, pady=10, sticky='we')
     
@@ -1107,3 +1072,4 @@ class PageThreeLion4(tk.Frame):
 if __name__ == "__main__":
     app = AnimalsApp()
     app.mainloop()
+
