@@ -212,9 +212,9 @@ class PageTwoHorses(tk.Frame):
 
         button1 = tk.Button(self, text='Koń huculski', width=25, command=lambda: controller.show_frame("PageThreeHorse1"))
         button1.grid(row=1, column=0)
-        button2 = tk.Button(self, text='Kot małopolski', width=25, command=lambda: controller.show_frame("PageThreeHorse2"))
+        button2 = tk.Button(self, text='Koń małopolski', width=25, command=lambda: controller.show_frame("PageThreeHorse2"))
         button2.grid(row=1, column=1)
-        button3 = tk.Button(self, text='Kot oldenburski', width=25, command=lambda: controller.show_frame("PageThreeHorse3"))
+        button3 = tk.Button(self, text='Koń oldenburski', width=25, command=lambda: controller.show_frame("PageThreeHorse3"))
         button3.grid(row=2, column=0)
         button4 = tk.Button(self, text='Holenderski koń gorącokrwisty', width=25, command=lambda: controller.show_frame("PageThreeHorse4"))
         button4.grid(row=2, column=1)
