@@ -1,4 +1,4 @@
-from schema import Cat, Dog, Cow, Horse, Lion, Session, engine
+from schema import Cat, Dog, Cow, Horse, Lion, Canary, Session, engine
 
 '''
 Creating animals
@@ -249,6 +249,36 @@ lions=[
     }
 ]
 
+canaries=[
+    {
+        "race":"lipochromowy czerwony",
+        "color":"czerwony",
+        "height": 0.13,
+        "weight": 0.02,
+        "length_of_life": 8,
+        "isWild": False,
+        "isHavingMane": False
+    },
+    {
+        "race":"lipochromowy pomarańczowy",
+        "color":"pomarańczowy",
+        "height": 0.13,
+        "weight": 0.02,
+        "length_of_life": 9,
+        "isWild": False,
+        "isHavingMane": False
+    }, 
+    {
+        "race":"lipochromowy żółty",
+        "color":"żółty",
+        "height": 0.13,
+        "weight": 0.02,
+        "length_of_life": 10,
+        "isWild": False,
+        "isHavingMane": False
+    }
+]
+
 local_session = Session(bind=engine)
 
 '''
@@ -290,3 +320,10 @@ Adding animals to database
     local_session.add(new_lion)
     local_session.commit()
     print(f"Added {l}")'''
+
+# for c in canaries:
+#     new_canary = Canary(race=c["race"], color=c["color"], height=c["height"], weight=c["weight"], 
+#         length_of_life=c["length_of_life"], isWild=c["isWild"], isHavingMane=c["isHavingMane"])
+#     local_session.add(new_canary)
+#     local_session.commit()
+#     print(f"Added {c}")

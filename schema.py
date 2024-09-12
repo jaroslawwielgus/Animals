@@ -88,3 +88,18 @@ class Lion(Base):
 
     def __repr__(self):
         return f"Race: {self.race} Color: {self.color}"
+
+
+class Canary(Base):
+    __tablename__ = 'canaries'
+    id = Column(Integer(), primary_key=True)
+    race = Column(String(30), nullable=False, unique=True)
+    color = Column(String(30), nullable=False)
+    height = Column(Float(2), nullable=False)
+    weight = Column(Float(2), nullable=False)
+    length_of_life = Column(Float(1), nullable=False)
+    isWild = Column(Boolean(), nullable=False)
+    isHavingMane = Column(Boolean(), nullable=False)
+
+    def __repr__(self):
+        return f"Race: {self.race} Color: {self.color}"

@@ -8,8 +8,9 @@ import dog as d
 import cow as co
 import horse as h
 import lion as l
+import canary as ca
 import pyttsx3
-from schema import Cat, Dog, Cow, Horse, Lion, Session, engine
+from schema import Cat, Dog, Cow, Horse, Lion, Canary, Session, engine
 
 
 '''
@@ -43,7 +44,7 @@ class AnimalsApp(tk.Tk):
          PageThreeDog3, PageThreeDog4, PageThreeDog5, PageThreeDogW, PageTwoCows, PageThreeCow1, 
          PageThreeCow2, PageThreeCow3, PageThreeCow4, PageThreeCow5, PageTwoHorses, PageThreeHorse1,
          PageThreeHorse2, PageThreeHorse3, PageThreeHorse4, PageThreeHorse5, PageTwoLions,
-         PageThreeLion1, PageThreeLion2, PageThreeLion3, PageThreeLion4):
+         PageThreeLion1, PageThreeLion2, PageThreeLion3, PageThreeLion4, PageTwoCanaries, PageThreeCanary1, PageThreeCanary2, PageThreeCanary3):
             page_name = F.__name__
             frame = F(parent=container, controller=self)
             self.frames[page_name] = frame
@@ -91,6 +92,11 @@ class AnimalsApp(tk.Tk):
             l1 = l.Lion(lion1.race, lion1.color, lion1.height, lion1.weight, lion1.length_of_life, lion1.isWild, lion1.mane)
             engine.say(l1.give_voice())
             engine.runAndWait()
+        elif page_name == "PageTwoCanaries":
+            canary1 = local_session.query(Canary).first()
+            ca1 = ca.Canary(canary1.race, canary1.color, canary1.height, canary1.weight, canary1.length_of_life, canary1.isWild, canary1.isHavingMane)
+            engine.say(ca1.give_voice())
+            engine.runAndWait()
 
 
 class StartPage(tk.Frame):
@@ -124,6 +130,8 @@ class PageOne(tk.Frame):
         button4.grid(row=2, column=1)
         button5 = tk.Button(self, text='Lew', width=25, command=lambda: controller.show_frame("PageTwoLions"))
         button5.grid(row=3, column=0)
+        button5 = tk.Button(self, text='Kanarek', width=25, command=lambda: controller.show_frame("PageTwoCanaries"))
+        button5.grid(row=3, column=1)
 
         button = tk.Button(self, text="Wróć", bg='purple',
                            command=lambda: controller.show_frame("StartPage"))
@@ -246,6 +254,24 @@ class PageTwoLions(tk.Frame):
                            command=lambda: controller.show_frame("PageOne"))
         button.grid(row=3, column=1, pady=20)
 
+
+class PageTwoCanaries(tk.Frame):
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+        self.controller = controller
+        label = tk.Label(self, text="Kanarki", font=controller.title_font)
+        label.grid(row=0, column=0, columnspan=2, pady=10, sticky='we')
+
+        button1 = tk.Button(self, text='lipochromowy czerwony', width=25, command=lambda: controller.show_frame("PageThreeCanary1"))
+        button1.grid(row=1, column=0)
+        button2 = tk.Button(self, text='lipochromowy pomarańczowy', width=25, command=lambda: controller.show_frame("PageThreeCanary2"))
+        button2.grid(row=1, column=1)
+        button3 = tk.Button(self, text='lipochromowy żółty', width=25, command=lambda: controller.show_frame("PageThreeCanary3"))
+        button3.grid(row=2, column=0)
+
+        button = tk.Button(self, text="Wróć", bg='purple',
+                           command=lambda: controller.show_frame("PageOne"))
+        button.grid(row=3, column=1, pady=20)
 
 class PageThreeCat1(tk.Frame):
     def __init__(self, parent, controller):
@@ -1069,6 +1095,95 @@ class PageThreeLion4(tk.Frame):
                            command=lambda: controller.show_frame("PageTwoLions"))
         button.grid(row=7, column=1, pady=20)
 
+class PageThreeCanary1(tk.Frame):
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+        self.controller = controller
+        canary1 = local_session.query(Canary).filter(Canary.race=="lipochromowy czerwony").first()
+        race = tk.Label(self, text=canary1.race.capitalize(), font=controller.title_font)
+        race.grid(row=0, column=0, columnspan=2, pady=10, sticky='we')
+    
+        img = ImageTk.PhotoImage(Image.open('img/canaries/lipochromowy_czerwony.jpg'))
+        label2 = tk.Label(self, image=img, relief=SOLID)
+        label2.grid(row=1, column=0, rowspan=8, sticky='w')
+        label2.image=img
+
+        color = tk.Label(self, text='Umaszczenie: ' + canary1.color)
+        color.grid(row=1, column=1, sticky='w')
+        height = tk.Label(self, text='Wysokość: ' + str(canary1.height) + "m")
+        height.grid(row=2, column=1, sticky='w')
+        weight = tk.Label(self, text= 'Waga: ' + str(canary1.weight) + "kg")
+        weight.grid(row=3, column=1, sticky='w')
+        length_of_life = tk.Label(self, text='Dlugość życia: ' + str(canary1.length_of_life))
+        length_of_life.grid(row=4, column=1, sticky='w')
+        is_wild = tk.Label(self, text='Czy dziki: ' + ("Tak" if canary1.isWild else "Nie"))
+        is_wild.grid(row=5, column=1, sticky='w')
+        is_having_mane = tk.Label(self, text='Czy ma grzywkę: ' + ("Tak" if canary1.isHavingMane else "Nie"))
+        is_having_mane.grid(row=6, column=1, sticky='w')
+
+        button = tk.Button(self, text="Wróć", bg='purple',
+                           command=lambda: controller.show_frame("PageTwoCanaries"))
+        button.grid(row=7, column=1, pady=20)
+
+class PageThreeCanary2(tk.Frame):
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+        self.controller = controller
+        canary2 = local_session.query(Canary).filter(Canary.race=="lipochromowy pomarańczowy").first()
+        race = tk.Label(self, text=canary2.race.capitalize(), font=controller.title_font)
+        race.grid(row=0, column=0, columnspan=2, pady=10, sticky='we')
+    
+        img = ImageTk.PhotoImage(Image.open('img/canaries/lipochromowy_pomarańczowy.jpg'))
+        label2 = tk.Label(self, image=img, relief=SOLID)
+        label2.grid(row=1, column=0, rowspan=8, sticky='w')
+        label2.image=img
+
+        color = tk.Label(self, text='Umaszczenie: ' + canary2.color)
+        color.grid(row=1, column=1, sticky='w')
+        height = tk.Label(self, text='Wysokość: ' + str(canary2.height) + "m")
+        height.grid(row=2, column=1, sticky='w')
+        weight = tk.Label(self, text= 'Waga: ' + str(canary2.weight) + "kg")
+        weight.grid(row=3, column=1, sticky='w')
+        length_of_life = tk.Label(self, text='Dlugość życia: ' + str(canary2.length_of_life))
+        length_of_life.grid(row=4, column=1, sticky='w')
+        is_wild = tk.Label(self, text='Czy dziki: ' + ("Tak" if canary2.isWild else "Nie"))
+        is_wild.grid(row=5, column=1, sticky='w')
+        is_having_mane = tk.Label(self, text='Czy ma grzywkę: ' + ("Tak" if canary2.isHavingMane else "Nie"))
+        is_having_mane.grid(row=6, column=1, sticky='w')
+
+        button = tk.Button(self, text="Wróć", bg='purple',
+                           command=lambda: controller.show_frame("PageTwoCanaries"))
+        button.grid(row=7, column=1, pady=20)
+
+class PageThreeCanary3(tk.Frame):
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+        self.controller = controller
+        canary3 = local_session.query(Canary).filter(Canary.race=="lipochromowy żółty").first()
+        race = tk.Label(self, text=canary3.race.capitalize(), font=controller.title_font)
+        race.grid(row=0, column=0, columnspan=2, pady=10, sticky='we')
+    
+        img = ImageTk.PhotoImage(Image.open('img/canaries/lipochromowy_żółty.jpg'))
+        label2 = tk.Label(self, image=img, relief=SOLID)
+        label2.grid(row=1, column=0, rowspan=8, sticky='w')
+        label2.image=img
+
+        color = tk.Label(self, text='Umaszczenie: ' + canary3.color)
+        color.grid(row=1, column=1, sticky='w')
+        height = tk.Label(self, text='Wysokość: ' + str(canary3.height) + "m")
+        height.grid(row=2, column=1, sticky='w')
+        weight = tk.Label(self, text= 'Waga: ' + str(canary3.weight) + "kg")
+        weight.grid(row=3, column=1, sticky='w')
+        length_of_life = tk.Label(self, text='Dlugość życia: ' + str(canary3.length_of_life))
+        length_of_life.grid(row=4, column=1, sticky='w')
+        is_wild = tk.Label(self, text='Czy dziki: ' + ("Tak" if canary3.isWild else "Nie"))
+        is_wild.grid(row=5, column=1, sticky='w')
+        is_having_mane = tk.Label(self, text='Czy ma grzywkę: ' + ("Tak" if canary3.isHavingMane else "Nie"))
+        is_having_mane.grid(row=6, column=1, sticky='w')
+
+        button = tk.Button(self, text="Wróć", bg='purple',
+                           command=lambda: controller.show_frame("PageTwoCanaries"))
+        button.grid(row=7, column=1, pady=20)
 
 if __name__ == "__main__":
     app = AnimalsApp()
